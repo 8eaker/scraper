@@ -1,5 +1,10 @@
 package uk.co.bluetangerine.delegate;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -11,20 +16,21 @@ import uk.co.bluetangerine.delegate.ParserUtils.ParsingUtils;
 import uk.co.bluetangerine.delegate.dto.ProductDto;
 import uk.co.bluetangerine.delegate.dto.ResultsDto;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by tony on 15/11/2016.
  */
 
-
 public class ParseHTMLFromUrl implements ParseHTML {
     DocumentHelper docHelper = new DocumentHelper();
+
+    public ParseHTMLFromUrl() {
+    }
+
+    public ParseHTMLFromUrl(DocumentHelper docHelper) {
+        this.docHelper = docHelper;
+    }
+
     /**
-     *
      * @param url
      * @return
      * @throws IOException
@@ -35,14 +41,14 @@ public class ParseHTMLFromUrl implements ParseHTML {
         return gson.toJson(results);
     }
 
-
     /**
      * Parse the main parent page. Parses main parent page to
      * extract Title and unit price also keep a running total.
      * Calls the child page method to populate rest of dto fields.
-     * @Param url Url for the parent page
+     *
      * @return populated ResultsDto object
      * @throws IOException
+     * @Param url Url for the parent page
      */
     protected ResultsDto parseToDto(String url) throws IOException {
         //Create one resultsDto to contain all products found
@@ -79,6 +85,7 @@ public class ParseHTMLFromUrl implements ParseHTML {
      * extract description and size and populate
      * remaining fields on the Dto.
      * Access modifier set to protected to allow unit testing
+     *
      * @Param url Url for the child page
      * @Param dto being populated
      * @Return new copy of product DTO with additional fields populated
@@ -96,10 +103,9 @@ public class ParseHTMLFromUrl implements ParseHTML {
         //Seek out Description and Size to populate Dto using the Text of productDataItemHeader.
         //The corresponding element in productText holds the value
         for (int i = 0; i < productDataItemHeaders.size(); i++) {
-            if ( productDataItemHeaders.get(i).text().equals("Description")) {
+            if (productDataItemHeaders.get(i).text().equals("Description")) {
                 result.setDescription(StringEscapeUtils.unescapeHtml4(productTexts.get(i).text()));
-            }
-            else if (productDataItemHeaders.get(i).text().equals("Size")) {
+            } else if (productDataItemHeaders.get(i).text().equals("Size")) {
                 result.setSize(StringEscapeUtils.unescapeHtml4(productTexts.get(i).text()));
             }
         }
