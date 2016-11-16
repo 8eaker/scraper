@@ -17,10 +17,10 @@ import uk.co.bluetangerine.delegate.dto.ProductDto;
 import uk.co.bluetangerine.delegate.dto.ResultsDto;
 
 /**
- * Created by tony on 15/11/2016.
+ * Created by tony on 16/11/2016.
  */
 
-public class ParseHTMLFromUrl implements ParseHTML {
+public class ParseHTMLFromUrl {
     DocumentHelper docHelper = new DocumentHelper();
 
     public ParseHTMLFromUrl() {

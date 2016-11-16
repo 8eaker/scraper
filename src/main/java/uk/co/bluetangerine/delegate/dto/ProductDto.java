@@ -1,7 +1,7 @@
 package uk.co.bluetangerine.delegate.dto;
 
 /**
- * Created by tony on 15/11/2016.
+ * Created by tony on 16/11/2016.
  * Dto class for product details
  */
 public class ProductDto {
