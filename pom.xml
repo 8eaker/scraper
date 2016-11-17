@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>page-scraper-delegate</artifactId>
+    <artifactId>page-scraper</artifactId>
 
     <dependencies>
         <dependency>

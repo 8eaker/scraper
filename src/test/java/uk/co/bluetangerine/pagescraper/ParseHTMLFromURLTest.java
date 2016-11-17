@@ -1,4 +1,4 @@
-package uk.co.bluetangerine.delegate;
+package uk.co.bluetangerine.pagescraper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.co.bluetangerine.delegate.ParserUtils.DocumentHelper;
+import uk.co.bluetangerine.pagescraper.ParserUtils.DocumentHelper;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * Created by tony on 15/11/2016.
+ * Test class to test HTML to JSON parsing
  */
 
 @RunWith(MockitoJUnitRunner.class)
@@ -33,7 +34,7 @@ public class ParseHTMLFromURLTest {
     @Mock
     DocumentHelper docHelperMock;
 
-    ParseHTMLFromUrl underTest;
+    private ParseHTMLFromUrl underTest;
 
     @Before
     public void setUp() throws Exception {

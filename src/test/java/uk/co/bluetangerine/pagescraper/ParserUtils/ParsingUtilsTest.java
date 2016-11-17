@@ -1,15 +1,14 @@
-package uk.co.bluetangerine.delegate.ParserUtils;
+package uk.co.bluetangerine.pagescraper.ParserUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by tony on 15/11/2016.
+ * Test class to test parsing utilities
  */
 public class ParsingUtilsTest {
-    ParsingUtils underTest = new ParsingUtils();
+    private ParsingUtils underTest = new ParsingUtils();
 
     @Test
     public void givenStringContainsValidvalueThenextractPriceFromString() {

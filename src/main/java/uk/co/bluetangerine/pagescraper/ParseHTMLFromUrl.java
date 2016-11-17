@@ -1,4 +1,4 @@
-package uk.co.bluetangerine.delegate;
+package uk.co.bluetangerine.pagescraper;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -11,31 +11,34 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import uk.co.bluetangerine.delegate.ParserUtils.DocumentHelper;
-import uk.co.bluetangerine.delegate.ParserUtils.ParsingUtils;
-import uk.co.bluetangerine.delegate.dto.ProductDto;
-import uk.co.bluetangerine.delegate.dto.ResultsDto;
+import uk.co.bluetangerine.pagescraper.ParserUtils.DocumentHelper;
+import uk.co.bluetangerine.pagescraper.ParserUtils.ParsingUtils;
+import uk.co.bluetangerine.pagescraper.dto.ProductDto;
+import uk.co.bluetangerine.pagescraper.dto.ResultsDto;
+import uk.co.bluetangerine.pagescraper.dto.SubProductDto;
 
 /**
  * Created by tony on 16/11/2016.
+ * Parser implementation for HTMLfromURL.
+ * Deals with parsing parent page and child pages
  */
 
-public class ParseHTMLFromUrl {
-    DocumentHelper docHelper = new DocumentHelper();
+class ParseHTMLFromUrl {
+    private DocumentHelper docHelper = new DocumentHelper();
 
-    public ParseHTMLFromUrl() {
+    ParseHTMLFromUrl() {
     }
 
-    public ParseHTMLFromUrl(DocumentHelper docHelper) {
+    ParseHTMLFromUrl(DocumentHelper docHelper) {
         this.docHelper = docHelper;
     }
 
     /**
-     * @param url
-     * @return
+     * @param url Resource location
+     * @return String json results
      * @throws IOException
      */
-    public String parse(String url) throws IOException {
+    String parse(String url) throws IOException {
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
         ResultsDto results = parseToDto(url);
         return gson.toJson(results);
@@ -48,9 +51,9 @@ public class ParseHTMLFromUrl {
      *
      * @return populated ResultsDto object
      * @throws IOException
-     * @Param url Url for the parent page
+     * @param url Url for the parent page
      */
-    protected ResultsDto parseToDto(String url) throws IOException {
+    private ResultsDto parseToDto(String url) throws IOException {
         //Create one resultsDto to contain all products found
         //and provide a running total
         ResultsDto resultsDto = new ResultsDto();
@@ -71,7 +74,10 @@ public class ParseHTMLFromUrl {
             itemDto.setUnitPrice(utils.extractPriceFromString(StringEscapeUtils.unescapeHtml4(item.getElementsByClass("pricePerUnit").text())));
             runningTotal = runningTotal.add(new BigDecimal(itemDto.getUnitPrice()));
             //Call the sub page function with the extracted URL and allow it to populate rest of Dto fields
-            itemDto = parseSubPageUrl(productInfo.select("a").first().attr("href"), itemDto);
+            SubProductDto subProductDto = parseSubPageUrl(productInfo.select("a").first().attr("href"));
+            //As spec requires flat json product structure, set values from subProductDto object
+            itemDto.setDescription(subProductDto.getDescription());
+            itemDto.setSize(subProductDto.getSize());
             responses.add(itemDto);
         }
 
@@ -86,13 +92,11 @@ public class ParseHTMLFromUrl {
      * remaining fields on the Dto.
      * Access modifier set to protected to allow unit testing
      *
-     * @Param url Url for the child page
-     * @Param dto being populated
-     * @Return new copy of product DTO with additional fields populated
+     * @param childUrl Url for the child page
+     * @return ProductDto new copy of product DTO with additional fields populated
      */
-    protected ProductDto parseSubPageUrl(String childUrl, ProductDto item) throws IOException {
-        //Avoid bad practice of modifying parameter references!
-        ProductDto result = item;
+    private SubProductDto parseSubPageUrl(String childUrl) throws IOException {
+        SubProductDto result = new SubProductDto();
         Document doc = docHelper.getDocumentHelper(childUrl);
 
         //For each productDataItemHeader ...
@@ -109,7 +113,6 @@ public class ParseHTMLFromUrl {
                 result.setSize(StringEscapeUtils.unescapeHtml4(productTexts.get(i).text()));
             }
         }
-
         return result;
     }
 }

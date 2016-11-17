@@ -1,4 +1,4 @@
-package uk.co.bluetangerine.delegate;
+package uk.co.bluetangerine.pagescraper;
 
 import java.io.IOException;
 

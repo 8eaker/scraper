@@ -1,4 +1,4 @@
-package uk.co.bluetangerine.delegate.ParserUtils;
+package uk.co.bluetangerine.pagescraper.ParserUtils;
 
 import java.math.BigDecimal;
 import java.util.regex.Matcher;

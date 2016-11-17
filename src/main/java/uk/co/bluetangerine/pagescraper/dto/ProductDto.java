@@ -1,14 +1,14 @@
-package uk.co.bluetangerine.delegate.dto;
+package uk.co.bluetangerine.pagescraper.dto;
 
 /**
  * Created by tony on 16/11/2016.
  * Dto class for product details
  */
 public class ProductDto {
-    String title;
-    String size;
-    String unit_price;
-    String description;
+    private String title;
+    private String size;
+    private String unit_price;
+    private String description;
 
     public String getTitle() {
         return title;

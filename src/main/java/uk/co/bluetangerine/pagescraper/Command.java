@@ -1,6 +1,4 @@
-package uk.co.bluetangerine.delegate;
-
-import uk.co.bluetangerine.delegate.dto.ResultsDto;
+package uk.co.bluetangerine.pagescraper;
 
 import java.io.IOException;
 
@@ -10,6 +8,6 @@ import java.io.IOException;
  * perhaps for a different target page or
  * from another source
  */
-public interface Command {
+interface Command {
     String parse (String resourceLocation) throws IOException;
 }

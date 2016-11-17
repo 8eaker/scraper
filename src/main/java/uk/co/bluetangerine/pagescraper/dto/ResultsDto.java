@@ -1,4 +1,4 @@
-package uk.co.bluetangerine.delegate.dto;
+package uk.co.bluetangerine.pagescraper.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -8,8 +8,8 @@ import java.util.List;
  * Wrapper Dto for products and total
  */
 public class ResultsDto {
-    List<ProductDto> results;
-    BigDecimal total;
+    private List<ProductDto> results;
+    private BigDecimal total;
 
     public List<ProductDto> getProducts() {
         return results;
