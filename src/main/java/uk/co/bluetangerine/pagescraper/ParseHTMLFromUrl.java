@@ -29,11 +29,19 @@ class ParseHTMLFromUrl {
     ParseHTMLFromUrl() {
     }
 
+    /**
+     * Constructor to assist TDD
+     *
+     * @param docHelper
+     */
     ParseHTMLFromUrl(DocumentHelper docHelper) {
         this.docHelper = docHelper;
     }
 
     /**
+     * private package access as we are using from
+     * same package
+     *
      * @param url Resource location
      * @return String json results
      * @throws IOException
@@ -49,15 +57,15 @@ class ParseHTMLFromUrl {
      * extract Title and unit price also keep a running total.
      * Calls the child page method to populate rest of dto fields.
      *
+     * @param url Url for the parent page
      * @return populated ResultsDto object
      * @throws IOException
-     * @param url Url for the parent page
      */
     private ResultsDto parseToDto(String url) throws IOException {
         //Create one resultsDto to contain all products found
         //and provide a running total
         ResultsDto resultsDto = new ResultsDto();
-        List<ProductDto> responses = new ArrayList<ProductDto>();
+        List<ProductDto> productDtos = new ArrayList<ProductDto>();
         Document doc = docHelper.getDocumentHelper(url);
         BigDecimal runningTotal = new BigDecimal("0");
         ParsingUtils utils = new ParsingUtils();
@@ -69,7 +77,7 @@ class ParseHTMLFromUrl {
         for (Element item : products) {
             ProductDto itemDto = new ProductDto();
             //ProductInner has only one productInfo so safe to assume 1 will exist and use it.
-            Element productInfo = item.getElementsByClass("productInfo").get(0);
+            Element productInfo = item.getElementsByClass("productInfo").first();
             itemDto.setTitle(StringEscapeUtils.unescapeHtml4(productInfo.select("a[href]").first().ownText()));
             itemDto.setUnitPrice(utils.extractPriceFromString(StringEscapeUtils.unescapeHtml4(item.getElementsByClass("pricePerUnit").text())));
             runningTotal = runningTotal.add(new BigDecimal(itemDto.getUnitPrice()));
@@ -78,10 +86,10 @@ class ParseHTMLFromUrl {
             //As spec requires flat json product structure, set values from subProductDto object
             itemDto.setDescription(subProductDto.getDescription());
             itemDto.setSize(subProductDto.getSize());
-            responses.add(itemDto);
+            productDtos.add(itemDto);
         }
 
-        resultsDto.setProducts(responses);
+        resultsDto.setProducts(productDtos);
         resultsDto.setTotal(runningTotal);
         return resultsDto;
     }

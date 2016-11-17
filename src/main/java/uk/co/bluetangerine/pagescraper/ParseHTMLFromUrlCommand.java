@@ -4,7 +4,7 @@ import java.io.IOException;
 
 /**
  * Created by tony on 16/11/2016.
- * Implement a command implementation for ParseHTMLFromURL
+ * A command implementation for ParseHTMLFromURL
  */
 class ParseHTMLFromUrlCommand implements Command {
     private ParseHTMLFromUrl parseHTMLFromUrl;

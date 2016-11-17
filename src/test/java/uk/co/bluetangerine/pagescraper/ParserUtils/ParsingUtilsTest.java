@@ -11,7 +11,7 @@ public class ParsingUtilsTest {
     private ParsingUtils underTest = new ParsingUtils();
 
     @Test
-    public void givenStringContainsValidvalueThenextractPriceFromString() {
+    public void givenStringContainsValidValueThenextractPriceFromString() {
         String stringContainingCurrencyValue = "£10.99GBP";
         String result = underTest.extractPriceFromString(stringContainingCurrencyValue);
         Assert.assertEquals(result, "10.99");

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Created by tony on 16/11/2016.
- * Wrapper Dto for products and total
+ * Wrapper Dto for list of products and total
  */
 public class ResultsDto {
     private List<ProductDto> results;

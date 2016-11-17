@@ -4,7 +4,7 @@ import java.io.IOException;
 
 /**
  * Created by tony on 16/11/2016.
- * ParserControl to allow common iterface should
+ * ParserControl to allow common interface should
  * any other parsers be introduced
  */
 class ParserControl {

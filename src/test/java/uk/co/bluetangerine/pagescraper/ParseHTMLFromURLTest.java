@@ -1,5 +1,11 @@
 package uk.co.bluetangerine.pagescraper;
 
+import java.io.IOException;
+import java.util.Iterator;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -9,21 +15,17 @@ import org.jsoup.select.Elements;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.*;
+import org.mockito.runners.*;
 import uk.co.bluetangerine.pagescraper.ParserUtils.DocumentHelper;
 
-import java.io.IOException;
-import java.util.Iterator;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
-
 /**
+ * Test class to mock up JSoup to replicate
+ * a scrapped page content. At this stage the
+ * assumption is a valid endpoint matching the requirements.
+ * Ulitmately, with further checks in place to handle exceptions
+ * more tests would added to ensure desired handling of any exceptions
  * Created by tony on 15/11/2016.
- * Test class to test HTML to JSON parsing
  */
 
 @RunWith(MockitoJUnitRunner.class)
